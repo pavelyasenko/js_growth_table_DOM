@@ -1,17 +1,15 @@
 'use strict';
 
-// #region butons
+// #region buttons
 const appendRowButton = document.querySelector('.append-row');
 const appendColumnButton = document.querySelector('.append-column');
 const removeColumnButton = document.querySelector('.remove-column');
 const removeRowButton = document.querySelector('.remove-row');
 // #endregion
-
-// #region value
+// #region values
 const tbody = document.querySelector('tbody');
 let columCount = 4;
 let rowsCount = 4;
-
 const max = 10;
 const min = 2;
 
@@ -21,10 +19,10 @@ function newButonsRull() {
   removeColumnButton.disabled = columCount <= min;
   removeRowButton.disabled = rowsCount <= min;
 }
-// #endregion
 
-// #region appenButons
-appendRowButton.addEventListener('click', (e) => {
+// #endregion
+// #region add buttons
+appendRowButton.addEventListener('click', () => {
   if (rowsCount >= max) {
     return;
   }
@@ -34,13 +32,12 @@ appendRowButton.addEventListener('click', (e) => {
   for (let i = 0; i < columCount; i++) {
     newRow.appendChild(document.createElement('td'));
   }
-
   tbody.appendChild(newRow);
   rowsCount++;
   newButonsRull();
 });
 
-appendColumnButton.addEventListener('click', (e) => {
+appendColumnButton.addEventListener('click', () => {
   if (columCount >= max) {
     return;
   }
@@ -48,35 +45,38 @@ appendColumnButton.addEventListener('click', (e) => {
   for (const row of tbody.children) {
     row.appendChild(document.createElement('td'));
   }
-
   columCount++;
   newButonsRull();
 });
 
 // #endregion
-
-// #region removeButons
-removeRowButton.addEventListener('click', (e) => {
+// #region remove buttons
+removeRowButton.addEventListener('click', () => {
   if (rowsCount <= min) {
     return;
   }
 
   tbody.removeChild(tbody.lastElementChild);
-
   rowsCount--;
   newButonsRull();
 });
 
-removeColumnButton.addEventListener('click', (e) => {
-  if (rowsCount <= min) {
+removeColumnButton.addEventListener('click', () => {
+  if (columCount <= min) {
+    return;
+  }
+
+  if (tbody.children.length === 0) {
+    columCount--;
+    newButonsRull();
+
     return;
   }
 
   for (const row of tbody.children) {
     row.removeChild(row.lastElementChild);
   }
-
   columCount--;
   newButonsRull();
 });
-// #endregions
+// #endregion
